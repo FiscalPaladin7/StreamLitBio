@@ -26,14 +26,20 @@ st.markdown("""
         padding-bottom: 2rem;
     }
     
-    /* Style the sidebar */
+    /* --- SIDEBAR STYLING FIX --- */
+    /* Force sidebar background to be white and text to be dark grey */
     [data-testid="stSidebar"] {
-        background-color: #f8f9fa; /* Light grey for contrast in light mode */
+        background-color: #ffffff;
+    }
+    /* Force all text inside sidebar to be dark, regardless of theme */
+    [data-testid="stSidebar"] .stMarkdown, [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span {
+        color: #333333 !important;
     }
     
-    /* Custom headers */
+    /* Custom headers in main area */
     h1, h2, h3 {
-        color: #0e1117;
+        color: #0e1117; 
+        /* In dark mode, you might want these white. If the main bg is black, change this to #ffffff */
     }
     
     /* Card styling for projects */
@@ -52,6 +58,7 @@ LOCATION = "341-B F. Jaca Street, Inayawan, Cebu City"
 ROLE = "BSIT Student @ CIT-U"
 EMAIL = "FiscalPaladin7@gmail.com"
 PHONE = "+63 976 050 7513"
+GITHUB_LINK = "https://github.com/FiscalPaladin7"
 
 def get_age(birthdate):
     today = date.today()
@@ -72,18 +79,18 @@ with st.sidebar:
     
     st.markdown("---")
     
-    # Improved Navigation Menu using streamlit-option-menu
+    # Improved Navigation Menu
     selected = option_menu(
-        menu_title=None,  # Required
+        menu_title=None,
         options=["Profile", "Education", "Tech Stack", "Projects", "Contact"], 
         icons=["person-circle", "book-half", "cpu", "code-slash", "envelope"], 
         menu_icon="cast", 
         default_index=0,
         styles={
             "container": {"padding": "0!important", "background-color": "transparent"},
-            "icon": {"color": "orange", "font-size": "18px"}, 
-            "nav-link": {"font-size": "16px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
-            "nav-link-selected": {"background-color": "#ff4b4b"},
+            "icon": {"color": "#ff4b4b", "font-size": "18px"}, 
+            "nav-link": {"font-size": "16px", "text-align": "left", "margin":"0px", "--hover-color": "#f0f2f6", "color": "#333333"},
+            "nav-link-selected": {"background-color": "#ff4b4b", "color": "white !important"},
         }
     )
     
@@ -101,7 +108,7 @@ if selected == "Profile":
         st.title(f"Hello, I'm Joseph! 👋")
         st.subheader("Aspiring IT Specialist & Systems Developer")
         
-        # Used the text from the provided image (Objective)
+        # Objective text
         st.info("""
         **OBJECTIVE**
         
@@ -124,7 +131,8 @@ if selected == "Profile":
     with col2:
         st.markdown("### Connect")
         st.button("📄 Download Resume")
-        st.button("🐙 Visit GitHub")
+        # FIXED: Direct link button to GitHub
+        st.link_button("🐙 Visit GitHub", GITHUB_LINK)
 
 
 # 2. EDUCATION SECTION
@@ -148,7 +156,7 @@ elif selected == "Education":
     st.write("Focus on Science, Technology, Engineering, and Mathematics.")
     st.divider()
 
-    # Junior High School (Added from image)
+    # Junior High School
     st.header("Holy Rosary School of Pardo")
     st.subheader("Junior High School")
     st.caption("2014 - 2018")
@@ -174,14 +182,23 @@ elif selected == "Tech Stack":
 
     with col2:
         st.subheader("Tools & Technologies")
-        st.write("Development Environments")
-        st.json({
-            "IDE": ["VS Code", "PyCharm", "IntelliJ"],
-            "Version Control": "Git & GitHub",
-            "Database": ["MySQL", "Firebase"]
-        })
         
-        st.subheader("Core Competencies")
+        # FIXED: Replaced JSON block with readable list
+        st.markdown("""
+        **💻 Development Environments**
+        - VS Code
+        - PyCharm
+        - IntelliJ
+        
+        **🐙 Version Control**
+        - Git & GitHub
+        
+        **🗄️ Databases**
+        - MySQL
+        - Firebase
+        """)
+        
+        st.markdown("### Core Competencies")
         st.success("✅ Systems Analysis")
         st.success("✅ Network Troubleshooting")
         st.success("✅ UI/UX Prototyping")
@@ -200,13 +217,13 @@ elif selected == "Projects":
             st.subheader("Project A: E-Commerce Dashboard")
             st.image("https://via.placeholder.com/400x200?text=Dashboard+Preview", caption="Admin Panel")
             st.write("A Python-based dashboard for tracking sales and inventory metrics.")
-            st.link_button("View Code", "https://github.com")
+            st.link_button("View Code", GITHUB_LINK)
             
         with col_b:
             st.subheader("Project B: Student Portal")
             st.image("https://via.placeholder.com/400x200?text=Portal+Preview", caption="Login Interface")
             st.write("A secure login system for students to check grades and schedules.")
-            st.link_button("View Code", "https://github.com")
+            st.link_button("View Code", GITHUB_LINK)
             
     with tab2:
         st.warning("🚧 System Administration projects coming soon!")
